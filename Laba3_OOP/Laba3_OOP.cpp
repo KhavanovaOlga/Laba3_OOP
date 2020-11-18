@@ -15,10 +15,10 @@ using namespace std;
 class Form {
 public:
 	Form() {
-		printf("\nАбстрактная фигура\n");
+		
 	}
 	virtual void show() {
-
+		printf("\nАбстрактная фигура\n");
 	}
 	virtual ~Form() {
 		printf("Фигура удалилась\n");
@@ -78,7 +78,7 @@ public:
 		printf("Точка с координатами (%d;%d)\n", x, y);
 	}
 	~Point() {
-		printf("Точка удалилась с координатами (%d;%d)\n", x, y);;
+		printf("Точка удалилась с координатами (%d;%d)\n", x, y);
 	}
 };
 
@@ -92,13 +92,13 @@ public:
 		p2 = new Point(rand() % 10, (rand() % 10));
 	}
 	void show() {
-		printf("Отрезок с точками : \n");
+		printf("\nОтрезок с точками: \n");
 		//cout << endl;
 		p1->show(); p2->show();
 		cout << endl;
 	}
 	~Line() {
-		printf("Отрезок с точками : \n");
+		printf("Отрезок с точками: \n");
 		//cout << endl;
 		p1->show(); p2->show();
 		delete p1;
@@ -111,6 +111,10 @@ int main()
 	Form* objNew;
 	srand(time(NULL));
 	setlocale(LC_ALL, "Rus");
+
+	printf("========================================\n");
+	printf("   Хранилище из 12 случайных объектов \n");
+	printf("========================================\n");
 	myStorage storage(12);
 	for (int i = 0; i < storage.getCount(); i++) {
 		int choice = rand() % 2 + 1;
@@ -121,13 +125,62 @@ int main()
 			storage.SetObject(i, new Line());
 	}
 	for (int i = 0; i < storage.getCount(); i++) {
-		storage.GetObject(i).show();
+		storage.GetObject(i).show(); 
 	}
 
-	printf("\n%d - Размер хранилища\n\n", storage.getCount());
+	printf("%d - Размер хранилища\n\n", storage.getCount());
 
-	unsigned int start_time = clock();
+	printf("===========================================\n");
+	printf("      Цикл из 100 случайных действий \n");
+	printf("===========================================\n");
+    unsigned int start_time = clock();
 	for (int i = 0; i < 100; i++) {
+		int random = rand() % 4 + 1;
+		switch (random) {
+
+		case 1:
+			random = rand() % 2 + 1;
+			if (random == 1) {
+				objNew = new Point(rand() % 10, rand() % 10);
+			}
+			else
+				objNew = new Line();
+			break;
+
+		case 2:
+			random = rand() % 2 + 1;
+			if (random == 1) {
+				objNew = new Point(rand() % 10, rand() % 10);
+			}
+			else
+				objNew = new Line();
+			storage.Add_Object(objNew);
+			printf("\n");
+			break;
+
+		case 3:
+			printf("Используем метод Show()\n");
+			storage.GetObject(rand() % storage.getCount()).show();
+			printf("\n");
+			break;
+
+		case 4:
+			storage.Del_Object(rand() % storage.getCount());
+			printf("\n");
+			break;
+		}
+	}
+	unsigned int end_time = clock();
+	unsigned int search_time = end_time - start_time;
+	printf("Время работы программы (мс) = %d\n", search_time);
+	system("pause");
+	system("cls");
+
+	printf("==============================================\n");
+	printf("        Цикл из 1000 случайных действий \n");
+	printf("==============================================\n");
+	start_time = clock();
+	for (int i = 0; i < 1000; i++) {
 		int random = rand() % 4 + 1;
 		switch (random) {
 
@@ -162,10 +215,56 @@ int main()
 			break;
 		}
 	}
+	end_time = clock();
+	search_time = end_time - start_time;
+	printf("Время работы программы (мс) = %d\n", search_time);
+	system("pause");
+	system("cls");
 
-			
+	printf("=============================================\n");
+	printf("        Цикл из 10000 случайных действий \n");
+	printf("=============================================\n");
+	start_time = clock();
+	for (int i = 0; i < 10000; i++) {
+		int random = rand() % 4 + 1;
+		switch (random) {
 
+		case 1:
+			random = rand() % 2 + 1;
+			if (random == 1) {
+				objNew = new Point(rand() % 10, rand() % 10);
+			}
+			else
+				objNew = new Line();
+			break;
 
+		case 2:
+			random = rand() % 2 + 1;
+			if (random == 1) {
+				objNew = new Point(rand() % 10, rand() % 10);
+			}
+			else
+				objNew = new Line();
+			storage.Add_Object(objNew);
+			break;
+
+		case 3:
+			printf("Используем метод Show\n");
+			storage.GetObject(rand() % storage.getCount()).show();
+			printf("\n");
+			break;
+
+		case 4:
+			storage.Del_Object(rand() % storage.getCount());
+			printf("\n");
+			break;
+		}
+	}
+	end_time = clock();
+	search_time = end_time - start_time;
+	printf("Время работы программы (мс) = %d\n", search_time);
+	system("pause");
+	system("cls");
 }
 
 
