@@ -15,13 +15,13 @@ using namespace std;
 class Form {
 public:
 	Form() {
-
+		printf("\nАбстрактная фигура\n");
 	}
 	virtual void show() {
 
 	}
 	virtual ~Form() {
-		cout << "Фигура была удалена" << endl;
+		printf("Фигура удалилась\n");
 	}
 };
 
@@ -38,7 +38,7 @@ public:
 		objects[index] = object;
 	}
 	Form& GetObject(int index) {
-		return; //дописать
+		return *objects[index]; 
 	}
 	void Del_Object(int index)
 	{
@@ -52,9 +52,9 @@ public:
 		Size++;
 		delete objects;
 		objects = object01;
-		cout << "";
+		printf("Добавили объект ");
 		object->show();
-		cout << "" << Size - 1 << endl;
+		printf("В память с индексом  %d\n\n", Size - 1);
 	}
 
 	int getCount() {
@@ -75,10 +75,10 @@ public:
 		this->y = y;
 	}
 	void show() {
-		cout << "";
+		printf("Точка с координатами (%d;%d)\n", x, y);
 	}
 	~Point() {
-		cout << "";
+		printf("Точка удалилась с координатами (%d;%d)\n", x, y);;
 	}
 };
 
@@ -92,14 +92,14 @@ public:
 		p2 = new Point(rand() % 10, (rand() % 10));
 	}
 	void show() {
-		cout << "";
-		cout << endl;
+		printf("Отрезок с точками : \n");
+		//cout << endl;
 		p1->show(); p2->show();
 		cout << endl;
 	}
 	~Line() {
-		cout << "";
-		cout << endl;
+		printf("Отрезок с точками : \n");
+		//cout << endl;
 		p1->show(); p2->show();
 		delete p1;
 		delete p2;
@@ -114,14 +114,57 @@ int main()
 	myStorage storage(12);
 	for (int i = 0; i < storage.getCount(); i++) {
 		int choice = rand() % 2 + 1;
-		if (choice == 2)
+		if (choice == 2) {
 			storage.SetObject(i, new Point(rand() % 10, rand() % 10));
+		}
 		else
 			storage.SetObject(i, new Line());
 	}
 	for (int i = 0; i < storage.getCount(); i++) {
 		storage.GetObject(i).show();
 	}
+
+	printf("\n%d - Размер хранилища\n\n", storage.getCount());
+
+	unsigned int start_time = clock();
+	for (int i = 0; i < 100; i++) {
+		int random = rand() % 4 + 1;
+		switch (random) {
+
+		case 1:
+			random = rand() % 2 + 1;
+			if (random == 1) {
+				objNew = new Point(rand() % 10, rand() % 10);
+			}
+			else
+				objNew = new Line();
+			break;
+
+		case 2:
+			random = rand() % 2 + 1;
+			if (random == 1) {
+				objNew = new Point(rand() % 10, rand() % 10);
+			}
+			else
+				objNew = new Line();
+			storage.Add_Object(objNew);
+			break;
+
+		case 3:
+			printf("Используем метод Show\n");
+			storage.GetObject(rand() % storage.getCount()).show();
+			printf("\n");
+			break;
+
+		case 4:
+			storage.Del_Object(rand() % storage.getCount());
+			printf("\n");
+			break;
+		}
+	}
+
+			
+
 
 }
 
